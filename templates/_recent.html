@@ -1,0 +1,23 @@
+<html>
+	<head>
+		<title>Recent pastes</title>
+		<link href="/style/hs-paste.css" rel="stylesheet" type="text/css" />
+		<link href="/highlight.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<?py for paste in pastes: ?>
+			<a class="paste-preview-link" href="/#{paste.id}">
+				<span class="paste-preview">
+					<span class="date">#{paste.date.strftime(DATE_FORMAT)}</span>
+					<span class="text">#{paste.preview}</span>
+				</span>
+			</a>
+			<div class="clearing"></div>
+		<?py #endfor ?>
+		<div class='menu'>
+			<ul>
+				<li><a class='create' href='/'>Create</a></li>
+			</ul>
+		</div>
+	</body>
+</html>
