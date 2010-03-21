@@ -2,13 +2,14 @@ import cgi
 import re
 import datetime
 import tenjin
+import operator
 
 from tenjin.helpers import *
 
 from datetime import *
 
 from pygments import highlight
-from pygments.lexers import guess_lexer, get_lexer_by_name
+from pygments.lexers import guess_lexer, get_lexer_by_name, get_all_lexers
 from pygments.formatters import HtmlFormatter
 
 from google.appengine.api import users
@@ -18,6 +19,7 @@ from google.appengine.ext import db
 
 shared_cache = tenjin.GaeMemcacheCacheStorage()
 engine = tenjin.Engine(cache=shared_cache)
+lexers = sorted(list(get_all_lexers()), key=operator.itemgetter(0))
 
 DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 
@@ -28,6 +30,7 @@ class Paste(db.Model):
 	code = db.TextProperty()
 	html = db.TextProperty()
 	preview = db.StringProperty(multiline=True)
+	language = db.StringProperty()
 	date = db.DateTimeProperty()
 
 class Handler(webapp.RequestHandler):
@@ -40,7 +43,20 @@ class Handler(webapp.RequestHandler):
 class PasteForm(Handler):
 
 	def get(self):
-		Handler.render(self, 'form', {})
+
+		all_languages = []
+
+		for l in lexers:
+			all_languages.append({'id':l[1][0], 'name':l[0]})
+			
+		context = {
+			'base_languages': [
+				{'id':'csharp', 'name':'C#'},
+				{'id':'sql', 'name':'SQL'}
+			],
+			'all_languages': all_languages
+		}
+		Handler.render(self, 'form', context)
 
 class PasteViewer(Handler):
 
@@ -49,6 +65,7 @@ class PasteViewer(Handler):
 		paste = db.GqlQuery('SELECT * FROM Paste WHERE id = ' + id)[0]
 		context = {
 			'date': paste.date.strftime(DATE_FORMAT),
+			'language': paste.language,
 			'html': paste.html
 		}
 		Handler.render(self, 'viewer', context)
@@ -63,9 +80,16 @@ class PasteRecent(Handler):
 class PasteSaver(Handler):
 
 	def post(self):
+
+		language = self.request.get('language')
+
+		if language == 'other':
+			language = self.request.get('other')
+
 		paste = self.create_paste(
 			self.next_id(),
 			self.request.get('code'),
+			language,
 			users.get_current_user()
 		)
 		paste.put()
@@ -78,12 +102,19 @@ class PasteSaver(Handler):
 		else:
 			return 1
 
-	def create_paste(self, id, code, user):
+	def create_paste(self, id, code, language, user):
 		paste = Paste()
 		paste.id = id
 		paste.user = user
 		paste.code = code
-		lexer = guess_lexer(code)
+
+		if language and language != 'auto':
+			lexer = get_lexer_by_name(language)
+		else:
+			lexer = guess_lexer(code)
+
+		paste.language = lexer.name
+
 		formatter = HtmlFormatter()
 		paste.html = highlight(code, lexer, formatter)
 		preview = str.join("\n", code.splitlines()[0:5])

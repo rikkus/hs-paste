@@ -54,6 +54,7 @@ body {
 	border: 1px solid black;
 	height: 80px;
 	overflow: hidden;
+	margin-right: 48px;
 }
 
 .paste-preview .language {
@@ -65,8 +66,7 @@ body {
 	height: 70px;
 }
 
-.paste-preview .date {
-	display: block;
+.paste-preview .meta {
 	font-size: small;
 	color: #888;
 	float: right;
@@ -85,6 +85,9 @@ body {
 
 /* ------------------------------------------------------------ */
 
+.paste {
+	margin-right: 48px;
+}
 .paste .language {
 	border-left: 1px solid black;
 	padding-left: 10px;

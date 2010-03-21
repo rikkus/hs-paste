@@ -3,10 +3,56 @@
 		<title>Create paste</title>
 		<link href="/style/hs-paste.css" rel="stylesheet" type="text/css" />
 	</head>
-	<body>
+	<body onload="document.getElementById('paste-text').focus();">
 		<form action="/save" method="post">
 
-			<div><textarea name="code" rows="40" cols="132"></textarea></div>
+			<div>
+
+				Language:
+
+				<input
+					type="radio"
+					checked="checked"
+					name="language"
+					id="auto"
+					value="auto"
+					onchange="document.getElementById('paste-text').focus();"
+				/>
+
+				<label for="auto">Auto</label>
+			
+				<?py for l in base_languages: ?>
+
+					<input
+						type="radio"
+						name="language"
+						id="#{l['id']}"
+						value="#{l['id']}"
+						onchange="document.getElementById('paste-text').focus();"
+					/>
+
+					<label for="#{l['id']}">#{l['name']}</label>
+
+				<?py #endfor ?>
+
+				<input type="radio" name="language" id="other" value="other" />
+				<label for="other">Other:</label>
+
+				<select
+					name="other"
+					onchange="document.getElementById('other').checked = true;">
+
+				<?py for l in all_languages: ?>
+					<option 
+						value="#{l['id']}"
+					>#{l['name']}</option>
+				<?py #endfor ?>
+
+				</select>
+
+			</div>
+
+			<div><textarea id="paste-text" name="code" rows="40" cols="132"></textarea></div>
 			<div><input type="submit" value="Submit"></div>
 
 		</form>

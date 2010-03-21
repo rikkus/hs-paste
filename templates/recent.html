@@ -6,10 +6,15 @@
 	</head>
 	<body>
 		<?py for paste in pastes: ?>
+			<a class="paste-preview-link" href="/#{paste.id}">
 			<div class="paste-preview">
-				<span class="date">#{paste.date.strftime(DATE_FORMAT)}</span>
-				<a class="paste-preview-link" href="/#{paste.id}">#{paste.preview}</a>
+				<div class="meta">
+					#{paste.language + ' | ' if paste.language else ''}
+					#{paste.date.strftime(DATE_FORMAT)}
+				</div>
+				#{paste.preview}
 			</div>
+			</a>
 			<div class="clearing"></div>
 		<?py #endfor ?>
 		<div class='menu'>

@@ -7,7 +7,8 @@
 	<body>
 		<div class="paste">
 			<span class="meta">
-				<span class="date">#{date}</span>
+				#{date}
+				#{' | ' + language if language else ''}
 			</span>
 			#{html}
 		</div>
