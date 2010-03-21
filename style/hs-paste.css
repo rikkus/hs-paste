@@ -1,6 +1,6 @@
 body {
 	margin: 1em;
-	font-family: Calibri, Verdana, sans-serif;
+	font-family: Monaco, Consolas, "Neep Alt", "Neep", fixed;
 	background-color: #ccc;
 }
 
@@ -8,13 +8,11 @@ body {
 	margin-right: 50px;
 }
 
-.Menu {
-	font-size: 12px;
+.menu {
 	border-left: 1px solid black;
 	border-bottom: 1px solid black;
 	background-color: #ffd;
-	width: 42px;
-	height: 32px;
+	width: 5em;
 	position: absolute;
 	margin: 0;
 	padding: 8px;
@@ -52,9 +50,9 @@ body {
 	display: block;
 	background-color: white;
 	border: 1px solid black;
-	height: 80px;
+	height: 5em;
 	overflow: hidden;
-	margin-right: 48px;
+	margin-right: 6em;
 }
 
 .paste-preview .language {
@@ -86,7 +84,7 @@ body {
 /* ------------------------------------------------------------ */
 
 .paste {
-	margin-right: 48px;
+	margin-right: 6em;
 }
 .paste .language {
 	border-left: 1px solid black;
@@ -144,4 +142,16 @@ select.language {
 	clear: both;
 	height: 0.5em;
 }
-			''')
+
+.language-radio {
+	float: left;
+	margin-right: 0.5em;
+}
+
+.language-radio:hover {
+	background-color: white;
+}
+
+.language-selection {
+	margin-bottom: 0.5em;
+}

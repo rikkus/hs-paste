@@ -29,7 +29,7 @@ class Paste(db.Model):
 	author = db.UserProperty()
 	code = db.TextProperty()
 	html = db.TextProperty()
-	preview = db.StringProperty(multiline=True)
+	preview = db.TextProperty()
 	language = db.StringProperty()
 	date = db.DateTimeProperty()
 
@@ -52,7 +52,9 @@ class PasteForm(Handler):
 		context = {
 			'base_languages': [
 				{'id':'csharp', 'name':'C#'},
-				{'id':'sql', 'name':'SQL'}
+				{'id':'sql', 'name':'SQL'},
+				{'id':'xml', 'name':'XML'},
+				{'id':'css', 'name':'CSS'}
 			],
 			'all_languages': all_languages
 		}

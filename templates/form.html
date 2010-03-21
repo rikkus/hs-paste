@@ -6,37 +6,64 @@
 	<body onload="document.getElementById('paste-text').focus();">
 		<form action="/save" method="post">
 
-			<div>
+			<div id="language-selection">
 
-				Language:
+				<div class="language-radio"
+					onclick="document.getElementById('auto').click()">
 
-				<input
-					type="radio"
-					checked="checked"
-					name="language"
-					id="auto"
-					value="auto"
-					onchange="document.getElementById('paste-text').focus();"
-				/>
+					<input
+						type="radio"
+						checked="checked"
+						name="language"
+						id="auto"
+						value="auto"
+						onchange="document.getElementById('paste-text').focus();"
+					/>
 
-				<label for="auto">Auto</label>
-			
-				<?py for l in base_languages: ?>
+					<label for="auto">Auto</label>
+				</div>
+
+				<div class="language-radio"
+					onclick="document.getElementById('text').click()">
 
 					<input
 						type="radio"
 						name="language"
-						id="#{l['id']}"
-						value="#{l['id']}"
+						id="text"
+						value="text"
 						onchange="document.getElementById('paste-text').focus();"
 					/>
 
-					<label for="#{l['id']}">#{l['name']}</label>
+					<label for="text">Plain text</label>
+
+				</div>
+			
+				<?py for l in base_languages: ?>
+
+					<div class="language-radio"
+						onclick="document.getElementById('#{l["id"]}').click()">
+
+						<input
+							type="radio"
+							name="language"
+							id="#{l['id']}"
+							value="#{l['id']}"
+							onchange="document.getElementById('paste-text').focus();"
+						/>
+
+						<label for="#{l['id']}">#{l['name']}</label>
+
+					</div>
 
 				<?py #endfor ?>
 
-				<input type="radio" name="language" id="other" value="other" />
-				<label for="other">Other:</label>
+				<div class="language-radio"
+					onclick="document.getElementById('other').click()">
+
+					<input type="radio" name="language" id="other" value="other" />
+					<label for="other">Other:</label>
+
+				</div>
 
 				<select
 					name="other"
@@ -50,9 +77,11 @@
 
 				</select>
 
+				<div class="clearing"/>
+
 			</div>
 
-			<div><textarea id="paste-text" name="code" rows="40" cols="132"></textarea></div>
+			<div><textarea id="paste-text" name="code" rows="32" cols="172"></textarea></div>
 			<div><input type="submit" value="Submit"></div>
 
 		</form>
