@@ -1,7 +1,13 @@
 body {
 	margin: 1em;
-	font-family: Monaco, Consolas, "Neep Alt", "Neep", fixed;
 	background-color: #ccc;
+	font-family: sans-serif;
+	font-size: 0.8em;
+}
+
+pre {
+	font-family: Monaco, Consolas, "Andale Mono", "Neep Alt", Neep, monospace;
+	font-size: 0.74em;
 }
 
 .content {
@@ -57,7 +63,6 @@ body {
 
 .paste-preview .language {
 	display: block;
-	font-size: small;
 	color: #888;
 	position: relative;
 	width: 50px;
@@ -65,7 +70,6 @@ body {
 }
 
 .paste-preview .meta {
-	font-size: small;
 	color: #888;
 	float: right;
 }
@@ -78,7 +82,6 @@ body {
 	top: -70px;
 	overflow: hidden;
 	font-family: Consolas, "Andale Mono", "Neep Alt", Neep, monospace;
-	font-size: 10px;
 }
 
 /* ------------------------------------------------------------ */
@@ -86,6 +89,14 @@ body {
 .paste {
 	margin-right: 6em;
 }
+
+.paste .highlight {
+
+	background-color: white;
+	border: 1px solid black;
+	padding: 10px;
+}
+
 .paste .language {
 	border-left: 1px solid black;
 	padding-left: 10px;
@@ -96,19 +107,9 @@ body {
 	display: block;
 	background-color: white;
 	border: 1px solid black;
-	font-size: small;
 	color: #888;
 	margin-bottom: 10px;
 	padding: 10px;
-}
-
-.paste .highlight {
-	padding: 10px;
-	border: 1px solid black;
-	background-color: white;
-	display: block;
-	font-family: Monaco, Consolas, "Andale Mono", "Neep Alt", Neep, monospace;
-	font-size: 12px;
 }
 
 /* ------------------------------------------------------------ */
