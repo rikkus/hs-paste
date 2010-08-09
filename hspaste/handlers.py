@@ -14,32 +14,18 @@ from google.appengine.api import users
 class Save(hspaste.Handler):
 
 	def post(self):
-
 		language = self.request.get('language')
+		other_language = self.request.get('other')
+		code = self.request.get('code')
 
 		if language == 'other':
-			language = self.request.get('other')
+			language = other_language
 
-		paste = self.create_paste(
-			self.next_id(),
-			self.request.get('code'),
-			language,
-			users.get_current_user()
-		)
-		paste.put()
-		self.redirect('/' + str(paste.id))
+		id = self.create_paste(code, language).put().id()
+		self.redirect('/' + str(id))
 
-	def next_id(self):
-		result = db.GqlQuery('SELECT * FROM Paste ORDER BY id DESC LIMIT 1')
-		if result.count() > 0:
-			return int(result[0].id) + 1
-		else:
-			return 1
-
-	def create_paste(self, id, code, language, user):
+	def create_paste(self, code, language):
 		paste = hspaste.Paste()
-		paste.id = id
-		paste.user = user
 		paste.code = code
 
 		if language and language != 'auto':
@@ -59,12 +45,9 @@ class Save(hspaste.Handler):
 class Form(hspaste.Handler):
 
 	def get(self):
-
 		all_languages = []
-
 		for l in self.lexers():
 			all_languages.append({'id':l[1][0], 'name':l[0]})
-			
 		context = {
 			'base_languages': [
 				{'id':'csharp', 'name':'C#'},
@@ -80,7 +63,7 @@ class Form(hspaste.Handler):
 class Recent(hspaste.Handler):
 
 	def get(self):
-		pastes = db.GqlQuery('SELECT * FROM Paste ORDER BY date DESC LIMIT 5')
+		pastes = hspaste.Paste.gql('ORDER BY date DESC LIMIT 5')
 		context = { 'pastes': pastes }
 		self.render('recent', context)
 
@@ -88,7 +71,8 @@ class Show(hspaste.Handler):
 
 	def get(self):
 		id = re.sub(r'/', '', self.request.path)
-		paste = db.GqlQuery('SELECT * FROM Paste WHERE id = ' + id)[0]
+		paste = hspaste.Paste.get_by_id(int(id))
+		author = paste.author if paste.author else ''
 		context = {
 			'date': paste.date.strftime(hspaste.Handler.DATE_FORMAT),
 			'language': paste.language,

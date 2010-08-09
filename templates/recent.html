@@ -6,7 +6,7 @@
 	</head>
 	<body>
 		<?py for paste in pastes: ?>
-			<a class="paste-preview-link" href="/#{paste.id}">
+			<a class="paste-preview-link" href="/#{paste.key().id()}">
 			<div class="paste-preview">
 				<div class="meta">
 					#{paste.language + ' | ' if paste.language else ''}

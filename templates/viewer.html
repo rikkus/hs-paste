@@ -9,7 +9,7 @@
 			<span class="meta">
 				#{date}
 				#{' | ' + language if language else ''}
-				#{' | ' + author if author else ''}
+				#{' | ' + author.email() if author else ''}
 			</span>
 			#{html}
 		</div>

@@ -15,8 +15,7 @@ engine = tenjin.Engine(cache=shared_cache)
 
 class Paste(db.Model):
 
-	id = db.IntegerProperty()
-	author = db.UserProperty()
+	author = db.UserProperty(auto_current_user_add=True)
 	code = db.TextProperty()
 	html = db.TextProperty()
 	preview = db.TextProperty()
