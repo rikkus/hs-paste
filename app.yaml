@@ -11,8 +11,10 @@ handlers:
   static_files: static/images/favicon.ico
   upload: static/images/favicon.ico
 
-- url: /.*
+- url: /save
   script: hs-paste.py
   login: required
 
+- url: /.*
+  script: hs-paste.py
 
