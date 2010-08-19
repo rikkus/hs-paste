@@ -23,6 +23,9 @@ class Save(hspaste.Handler):
 		if language == 'other':
 			language = other_language
 
+		if language == '':
+			language = 'text'
+
 		paste = self.create_paste(code, language)
 		key = paste.put()
 		self.send_mail(paste, key.id())
