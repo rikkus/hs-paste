@@ -15,17 +15,22 @@ from google.appengine.ext import webapp
 
 class Save(hspaste.Handler):
 
+	def get(self):
+		self.redirect('/')
+	
 	def post(self):
-		language = self.request.get('language')
-		other_language = self.request.get('other')
-		code = self.request.get('code')
-
+		Save.save(
+			self,
+			self.request.get('language'),
+			self.request.get('other'),
+			self.request.get('code')
+		)
+		
+	def save(self, language, other_language, code):
 		if language == 'other':
 			language = other_language
-
 		if language == '':
 			language = 'text'
-
 		paste = self.create_paste(code, language)
 		key = paste.put()
 		self.send_mail(paste, key.id())

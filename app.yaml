@@ -14,6 +14,10 @@ handlers:
 - url: /save
   script: hs-paste.py
   login: required
+  
+- url: /
+  script: hs-paste.py
+  login: required
 
 - url: /.*
   script: hs-paste.py
