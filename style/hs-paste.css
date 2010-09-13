@@ -2,14 +2,12 @@ body {
 	margin: 1em;
 	background-color: white;
 	font-family: sans-serif;
-	font-size: 0.8em;
 	padding: 0;
 	background: url('http://code.google.com/appengine/images/appengine-noborder-120x30.gif') bottom right no-repeat;
 }
 
 pre {
 	font-family: Monaco, Consolas, "Andale Mono", "Neep Alt", Neep, monospace;
-	font-size: 0.74em;
 }
 
 .content {
